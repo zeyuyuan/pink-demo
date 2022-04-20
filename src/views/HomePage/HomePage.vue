@@ -9,6 +9,8 @@
     <BaseButton @click="getFromArweave">getFromArweave</BaseButton>
     <div>go mirror 有接口关注 和 查询关注地址的最新更新</div>
     <BaseButton @click="getGoMirror">go mirror</BaseButton>
+    <ArweaveDemo />
+    <UsersEntries />
   </div>
 </template>
 
@@ -16,6 +18,8 @@
 import axios from "axios";
 import BaseButton from "@/components/BaseButton.vue";
 import { query } from "gql-query-builder";
+import ArweaveDemo from "@/views/HomePage/ArweaveSdk.vue";
+import UsersEntries from "@/views/HomePage/UsersEntries.vue";
 
 const getFromMirror = async () => {
   const result = await axios({
@@ -40,13 +44,17 @@ const getFromArweave = async () => {
             values: ["MirrorXYZ"],
           },
           {
-            name: "Original-Content-Digest",
-            values: ["GjssNdA6XK7VYynkvwDem3KYwPACSU9nDWpR5rei3hw"],
+            name: "Contributor",
+            values: [
+              "0xee787A96e318d0ab2797375D138981a6E49292Ae",
+              "0xE901d6E73ed520a27cE01a07f938181973cFE098",
+            ],
           },
         ],
         type: "TagFilter!",
         list: true,
       },
+      first: 999,
       // owners: {
       //   value: ["0xee787A96e318d0ab2797375D138981a6E49292Ae"],
       //   type: "String!",
@@ -57,7 +65,7 @@ const getFromArweave = async () => {
       {
         edges: [
           {
-            node: ["id", { data: ["size", "type"] }],
+            node: ["id", "anchor", { data: ["size", "type"] }],
           },
         ],
       },
